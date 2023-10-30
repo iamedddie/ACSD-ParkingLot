@@ -16,19 +16,28 @@ public class LongTermParkingLot implements ParkingLot{
         int dailyRate = 15;
         int hourlyRate =2;
         int cost = 0;
+        int maxDay= 10;
         if (ticket.getDays() < 1 && ticket.getHours() == 0 && ticket.getMinutes() <= 30) {
             cost = 0;
             return cost;
-        } else if (ticket.getHours() >= 10) {
-            cost = (ticket.getDays() * dailyRate) + (dailyRate);
+        } else if (ticket.getHours() >= maxDay) {
+            cost = getDailyCost(ticket, dailyRate) + (dailyRate);
             return cost;
         } else if (ticket.getHours() < 10 && ticket.getMinutes() > 0) {
-            cost = (ticket.getDays() * dailyRate) + (ticket.getHours() * hourlyRate) + (hourlyRate);
+            cost = getDailyCost(ticket, dailyRate) + getHourlyCost(ticket, hourlyRate) + (hourlyRate);
             return cost;
         } else {
-            cost =(ticket.getDays() * dailyRate)+(ticket.getHours()*hourlyRate);
+            cost = getDailyCost(ticket, dailyRate) + getHourlyCost(ticket, hourlyRate);
             return cost;
         }
 
+    }
+
+    private  int getHourlyCost(Ticket ticket, int hourlyRate) {
+        return ticket.getHours() * hourlyRate;
+    }
+
+    private int getDailyCost(Ticket ticket, int dailyRate) {
+        return ticket.getDays() * dailyRate;
     }
 }
