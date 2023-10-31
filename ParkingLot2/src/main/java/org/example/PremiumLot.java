@@ -17,30 +17,22 @@ public class PremiumLot implements ParkingLot {
         int hours = ticket.getHours();
         int mins = ticket.getMinutes();
         int freeDays = days/7;
-        int actualBilledDays = 0;
+        int actualBilledDays = days - freeDays;
 
         int dailyRate = 27;
         int hourlyRate =4;
         int cost = 0;
 
-        if (ticket.getDays() >= 7) {
-            if (ticket.getHours() >= 7) {
-                actualBilledDays = ticket.getDays() + 1;
-                cost = ((actualBilledDays - freeDays) * dailyRate);
-            }
-            return cost;
-        } else if (ticket.getHours() < 7) {
-            if (ticket.getMinutes() == 0) {
-                actualBilledDays = ticket.getDays();
-                cost = ((actualBilledDays - freeDays) * dailyRate) + ticket.getHours() * hourlyRate;
-            } else {
-                cost = ((actualBilledDays - freeDays) * dailyRate) + (ticket.getHours() * hourlyRate) + hourlyRate;
-            }
-            return cost;
-        } else {
-            cost = (ticket.getDays() * dailyRate) + (ticket.getHours() * hourlyRate);
-            return cost;
+        cost += actualBilledDays * dailyRate;
+
+        if (mins > 0) {
+            hours++;
         }
+
+        int hourlyCharge = Math.min(hours * hourlyRate, dailyRate);
+        cost += hourlyCharge;
+
+        return cost;
 
     }
 
