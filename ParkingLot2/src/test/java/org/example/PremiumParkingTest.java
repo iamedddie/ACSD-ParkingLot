@@ -42,7 +42,7 @@ class PremiumParkingTest {
 
 
     @ParameterizedTest
-    @CsvSource({"9,0,0,216","11,1,1,278","15,0,1,355", "13,4,30,324"})
+    @CsvSource({"9,0,0,216","11,1,1,278","15,0,1,355", "13,6,30,324", "13,7,30,324"})
     void testFreeDays(int days,int hours, int minutes, double cost) {
         when(mockTicket.getDays()).thenReturn(days);
         when(mockTicket.getMinutes()).thenReturn(minutes);
